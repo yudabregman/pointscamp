@@ -1,0 +1,8 @@
+<h1>Edit Kid</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save changes</button>
+</form>
+
+<a href="{% url 'kids_list' %}">No, take me back</a>

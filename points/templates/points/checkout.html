@@ -1,0 +1,37 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'points/Checkout.css' %}" />
+</head>
+<body>
+  <h1 class="welcome">Checkout Page</h1>
+  <div class="container">
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ field.label }}:</strong> {{ error|escape }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.barcode.label_tag }}
+            {{ form.barcode }}
+        </div>
+        <div class="form-group">
+            {{ form.points_type.label_tag }}
+            {{ form.points_type }}
+        </div>
+        <button type="submit" class="button">Checkout</button>
+    </form>
+  </div>
+</body>
+{% endblock %}
+</html>

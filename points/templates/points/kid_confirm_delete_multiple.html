@@ -1,0 +1,20 @@
+<h1>Are you sure?</h1>
+
+<p>Are you sure you want to delete the following kids?</p>
+
+<ul>
+{% for kid in kids %}
+    <li>{{ kid.name }}</li>
+{% endfor %}
+</ul>
+
+<form method="POST">
+    {% csrf_token %}
+    {% for kid in kids %}
+        <input type="hidden" name="ids" value="{{ kid.id }}">
+    {% endfor %}
+    <input type="hidden" name="confirm" value="yes">
+    <button type="submit">Yes, delete them</button>
+</form>
+
+<a href="{% url 'kids_list' %}">No, take me back</a>

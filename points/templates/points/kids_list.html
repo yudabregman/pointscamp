@@ -1,0 +1,95 @@
+
+
+
+</html>
+
+
+<head>
+    <title>Admin Home</title>
+{% load static %}
+    <link rel="stylesheet" href="{% static 'points/a.css' %}" />
+</head>
+<body>
+<h1>List of kids</h1>
+  
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-row d-flex align-items-center">
+       <div class="center-content">
+    <div class="form-row">
+        {{ form.as_table }}
+    </div>
+    <div class="button-row">
+    </div>
+        <button type="submit" class="button">Add kid</button>
+</div>
+
+                
+            </div>
+        </form>
+   
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Page</title>
+
+</head>
+
+
+ <form method="POST" action="{% url 'kid_delete_multiple' %}">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Points</th>
+            <th>Barcode</th>
+            <th>Group</th> <!-- הוספתי שורת כותרת לקבוצה -->
+            <th>Actions</th>
+        </tr>
+        {% for kid in kids %}
+        <tr>
+            <td><input type="checkbox" name="ids" value="{{ kid.id }}"></td>
+            <td>{{ kid.name }}</td>
+            <td>{{ kid.points }}</td>
+            <td>{{ kid.barcode }}</td>
+            <td>{{ kid.group }}</td> <!-- הוספתי שדה להצגת הקבוצה -->
+            <td>
+                <a href="{% url 'kid_edit' kid.id %}">Edit</a> |
+                <a href="{% url 'kid_confirm_delete' kid.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+       
+
+    <!-- Rest of your code -->
+
+    <form method="POST" action="{% url 'kid_delete_multiple' %}">
+        {% csrf_token %}
+        <!-- Your table... -->
+        <button type="submit" class="Button">Delete selected kids</button>
+    </form>
+
+    <!-- Rest of your code -->
+
+    <h1>Upload Kids from Excel</h1>
+
+
+
+
+
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ upload_form.as_p }}
+        <button type="submit" class="button">Upload</button>
+    </form>
+</html>
+
+
+
+
+

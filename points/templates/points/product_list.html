@@ -1,0 +1,31 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Home</title>
+{% load static %}
+    <link rel="stylesheet" href="{% static 'points/a.css' %}" />
+</head>
+  <h1>Products</h1>
+
+  <form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add new Product</button>
+  </form>
+
+  <ul>
+  {% for product in object_list %}
+    <li>
+      {{ product.name }} ({{ product.points_value }} points)
+      <a href="{% url 'product_edit' product.id %}">edit</a>
+    </li>
+  {% endfor %}
+  </ul>
+  {% if user.is_staff %}
+  <a href="{% url 'rate_edit' %}">ערוך את שער ההמרה</a>
+{% endif %}
+
+
+{% endblock %}

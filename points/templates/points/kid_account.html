@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'points/kid account .css' %}" />
+</head>
+<body>
+    
+    <h1 class="welcome">Checkout Page</h1>
+    <div class="main-container">
+        <div class="left-side">
+            <div class="container top-container">
+                <h1>{{ kid.name }}'s Account</h1>
+                {% if points_type == "points" %}
+                <p> Pay with : Regular Points</p>
+                {% elif points_type == "points_from_cash" %}
+                <p>Pay with: Points from Cash</p>
+                {% endif %}
+                <p>Points: {{ kid.points }}</p>
+                <p>Points from cash: {{ kid.points_from_cash }}</p>
+            </div>
+            <div class="container bottom-container">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ add_cash_form.as_p }}
+                    </div>
+                    <button type="submit" name="submit-add-cash" class="button">Add cash</button>
+                </form>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="container right-container">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ purchase_form.as_p }}
+                    </div>
+                    <button type="submit" name="submit-purchase" class="button">Purchase</button>
+                </form>
+
+                {% for message in messages %}
+                    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+
+                <h3>Purchase history:</h3>
+                <ul>
+                    {% for purchase in purchases %}
+                        <li>{{ purchase.product.name }} ({{ purchase.date }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

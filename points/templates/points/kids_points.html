@@ -1,0 +1,80 @@
+<h2>Kids Points</h2>
+<div id="carousel">
+    <table id="kidTable">
+
+    </table>
+</div>
+
+<script>
+    let kids = [
+    {% for kid_points in kids_points_history %}
+    {
+        'name': '{{ kid_points.kid.name }}',
+        'points': '{{ kid_points.points_history }}',  // Change this line
+        'total_points': '{{ kid_points.total_points }}'
+    },
+    {% endfor %}
+    ];
+</script>
+
+</script>
+
+<h2>Group Points</h2>
+ <table>
+    {% for group in group_points %}
+    <tr>
+        <td>Group {{ group.group }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Enter your barcode to see your points</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="barcode" placeholder="Enter your barcode here">
+    <input type="submit" value="Check points">
+</form>
+
+{% if barcode_kid %}
+    <p class="message">Your points: {{ barcode_kid.points }}</p>
+
+    <script>
+        if (document.querySelector('.message')) {
+            setTimeout(function(){
+                document.querySelector('.message').style.display = 'none';
+            }, 10000);  // 10000 milliseconds = 10 seconds
+        }
+    </script>
+{% endif %}
+
+<script>
+    let startIndex = 0;
+    const displayKids = () => {
+        let table = document.getElementById("kidTable");
+        table.innerHTML = `
+        
+        `;
+        for (let i = startIndex; i < startIndex + 6; i++) {
+            if (i >= kids.length) {
+                break;
+            }
+            let row = `
+            <tr>
+                <td>${kids[i].name}</td>
+                <td>${kids[i].points}</td>
+                <td>${kids[i].total_points}</td>
+            </tr>
+            `;
+            table.innerHTML += row;
+        }
+        startIndex += 6;
+        if (startIndex >= kids.length) {
+            startIndex = 0;
+        }
+    }
+
+    setInterval(displayKids, 10000);  // Change the displayed kids every 10 seconds
+</script>
+
+
+

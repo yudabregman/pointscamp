@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Home</title>
+{% load static %}
+    <link rel="stylesheet" href="{% static 'points/admin home.css' %}" />
+</head>
+<body>
+    <div class="content">
+        <h1>Welcome Admin</h1>
+
+        <div class="button-container">
+            <div class="button-row">
+                <button class="button"><a href="/admin/">Admin Site</a></button>
+                <button class="button"><a href="/kid_edit">Kid Edit</a></button>
+                <button class="button"><a href="/checkout/">Enter barcode</a></button>
+            </div>
+            <div class="button-row">
+                <button class="button"><a href="/add_points/">Add points</a></button>
+                <button class="button"><a href="/store/">Store</a></button>
+                <button class="button"><a href="/kids_points/">Store</a></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
